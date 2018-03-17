@@ -13,7 +13,9 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 from dotenv import load_dotenv
-load_dotenv()
+dotenv_path = os.path.join(os.path.dirname(__file__) , ".env")
+load_dotenv(dotenv_path)
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,7 +29,7 @@ SECRET_KEY = '!2l17axn=0(yc=psa_8_mfmd6yzur#^qmcelfxxr-(o-k=5^ec'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [str(e) for e in os.getenv("allowed_hosts")]
+ALLOWED_HOSTS = [str(e) for e in os.environ.get("allowed_hosts").split(",")]
 
 
 # Application definition
@@ -123,5 +125,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_EMAILS = [
-    str(e) for e in os.getenv("auth_emails", default=None)
+    str(e) for e in os.environ.get("auth_emails", default=None).split(",")
 ]
